@@ -71,6 +71,10 @@ def move_LeftSide():
     x=100
     y=100
     dir = get_Direction(x,y,400,500)
+    while(x<=400 and y<=500):
+            x += dir[0]*5
+            y += dir[1]*5
+            draw_Character(x,y)
     pass
 
 def move_Rectangle():
@@ -85,7 +89,7 @@ def move_Triangle():
     #print("Tri")
     move_RightSide()
     move_BottomSide()
-    #move_LeftSide()
+    move_LeftSide()
     pass
 
 while True:
