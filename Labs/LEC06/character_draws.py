@@ -7,16 +7,19 @@ character = load_image("character.png")
 def move_Circle():
     print("Circle")
     clear_canvas()
+    for degree in range(361):
+        print(degree)
     character.draw(400,300)
     update_canvas()
+    
     pass
 
 def move_Rectangle():
-    print("Rect")
+    #print("Rect")
     pass
 
 def move_Triangle():
-    print("Tri")
+    #print("Tri")
     pass
 
 while True:
