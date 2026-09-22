@@ -29,7 +29,7 @@ def move_Right():
         draw_Character(x,500)
     pass
 def move_Down():
-    for y in range(500, 100, -5):
+    for y in range(500, 101, -5):
         draw_Character(700,y)
     pass
 def move_Left():
