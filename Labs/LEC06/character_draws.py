@@ -40,7 +40,9 @@ def move_Left():
 
 def normalize(x,y):
     v = math.sqrt(abs(x)+abs(y))
-    return (0,0)
+    vec = (x/v , y/v)
+    print(vec)
+    return vec
 
 def get_Direction(x1,y1,x2,y2):
     x,y = x2-x1, y2-y1
