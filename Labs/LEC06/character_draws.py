@@ -39,7 +39,7 @@ def move_Left():
     pass
 
 def normalize(x,y):
-    v = math.sqrt(abs(x)+abs(y))
+    v = math.sqrt(x**2+y**2)
     vec = (x/v , y/v)
     return vec
 
