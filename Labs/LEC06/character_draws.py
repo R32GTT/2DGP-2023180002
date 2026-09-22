@@ -41,7 +41,6 @@ def move_Left():
 def normalize(x,y):
     v = math.sqrt(abs(x)+abs(y))
     vec = (x/v , y/v)
-    print(vec)
     return vec
 
 def get_Direction(x1,y1,x2,y2):
@@ -50,7 +49,13 @@ def get_Direction(x1,y1,x2,y2):
     return (x,y)
 
 def move_RightSide():
-    x,y = get_Direction(400,500,700,100)
+    dir = get_Direction(400,500,700,100)
+    x = 400
+    y = 500
+    while(x <= 700 and y >= 100):
+        x += dir[0]
+        y += dir[1]
+        draw_Character(x,y)
     pass
 def move_BottomSide():
     pass
