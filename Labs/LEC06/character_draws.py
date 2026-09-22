@@ -37,9 +37,13 @@ def move_Left():
         draw_Character(x,100)
     pass
 
+def normalize(x,y):
+    
+    return (0,0)
+
 def get_Direction(x1,y1,x2,y2):
     x,y = x2-x1, y2-y1
-    print(x,y)
+    x,y = normalize(x,y)
     return (x,y)
 
 def move_RightSide():
