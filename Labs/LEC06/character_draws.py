@@ -38,7 +38,9 @@ def move_Left():
     pass
 
 def get_Direction(x1,y1,x2,y2):
-    return (0,0)
+    x,y = x2-x1, y2-y1
+    print(x,y)
+    return (x,y)
 
 def move_RightSide():
     x,y = get_Direction(400,500,700,100)
