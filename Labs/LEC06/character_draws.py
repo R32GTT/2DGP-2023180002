@@ -1,4 +1,5 @@
 from pico2d import *
+import math
 
 open_canvas(800,600)
 
@@ -38,7 +39,7 @@ def move_Left():
     pass
 
 def normalize(x,y):
-    
+    v = math.sqrt(abs(x)+abs(y))
     return (0,0)
 
 def get_Direction(x1,y1,x2,y2):
