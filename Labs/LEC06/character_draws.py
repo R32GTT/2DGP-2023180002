@@ -4,7 +4,7 @@ open_canvas(800,600)
 
 
 def move_Circle():
-    print("CIrcle")
+    print("Circle")
 
     pass
 
