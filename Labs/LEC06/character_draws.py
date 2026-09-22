@@ -37,13 +37,11 @@ def move_Left():
         draw_Character(x,100)
     pass
 
+def get_Direction(x1,y1,x2,y2):
+    return (0,0)
+
 def move_RightSide():
-    x = 400
-    y = 500
-    while x < 700 and y > 100:
-        x += 5
-        y -= 5
-        draw_Character(x,y)
+    x,y = get_Direction(400,500,700,100)
     pass
 def move_BottomSide():
     pass
