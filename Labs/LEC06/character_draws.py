@@ -68,6 +68,9 @@ def move_BottomSide():
     pass
 
 def move_LeftSide():
+    x=100
+    y=100
+    dir = get_Direction(x,y,400,500)
     pass
 
 def move_Rectangle():
