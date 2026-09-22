@@ -33,6 +33,8 @@ def move_Down():
         draw_Character(700,y)
     pass
 def move_Left():
+    for x in range(700, 101, -5):
+        draw_Character(x,100)
     pass
 
 def move_Rectangle():
