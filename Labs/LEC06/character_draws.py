@@ -8,7 +8,8 @@ def move_Circle():
     print("Circle")
     clear_canvas()
     for degree in range(361):
-        print(degree)
+        theta=math.radians(degree)
+        print(theta)
     character.draw(400,300)
     update_canvas()
     
