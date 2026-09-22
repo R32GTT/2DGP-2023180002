@@ -53,8 +53,8 @@ def move_RightSide():
     x = 400
     y = 500
     while(x <= 700 and y >= 100):
-        x += dir[0]
-        y += dir[1]
+        x += dir[0]*5
+        y += dir[1]*5
         draw_Character(x,y)
     pass
 
@@ -63,7 +63,7 @@ def move_BottomSide():
     x = 700
     y = 100
     while(x >= 100):
-        x += dir[0]
+        x += dir[0]*5
         draw_Character(x,y)
     pass
 
