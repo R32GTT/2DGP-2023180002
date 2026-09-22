@@ -21,6 +21,8 @@ def move_Circle():
     pass
 
 def move_Top():
+    for y in range(100, 501, 5):
+        draw_Character(100, y)
     pass
 def move_Right():
     pass
