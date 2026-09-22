@@ -13,10 +13,12 @@ def move_Circle():
         y = 300 + 200 * math.sin(theta)
         character.draw(x,y)
         update_canvas()
+        delay(0.01)
     pass
 
 def move_Rectangle():
     #print("Rect")
+
     pass
 
 def move_Triangle():
