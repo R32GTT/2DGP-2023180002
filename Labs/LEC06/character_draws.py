@@ -20,9 +20,21 @@ def move_Circle():
         draw_Character(x,y)
     pass
 
+def move_Top():
+    pass
+def move_Right():
+    pass
+def move_Down():
+    pass
+def move_Left():
+    pass
+
 def move_Rectangle():
     #print("Rect")
-    #draw_Character(x,y)
+    move_Top()
+    move_Right()
+    move_Down()
+    move_Left()
     pass
 
 def move_Triangle():
@@ -30,7 +42,7 @@ def move_Triangle():
     pass
 
 while True:
-    move_Circle()
+    #move_Circle()
     move_Rectangle()
     move_Triangle()
     pass
