@@ -38,6 +38,12 @@ def move_Left():
     pass
 
 def move_RightSide():
+    x = 400
+    y = 500
+    while x < 700 and y > 100:
+        x += 5
+        y -= 5
+        draw_Character(x,y)
     pass
 def move_BottomSide():
     pass
@@ -55,8 +61,8 @@ def move_Rectangle():
 def move_Triangle():
     #print("Tri")
     move_RightSide()
-    move_BottomSide()
-    move_LeftSide()
+    #move_BottomSide()
+    #move_LeftSide()
     pass
 
 while True:
