@@ -25,6 +25,8 @@ def move_Top():
         draw_Character(100, y)
     pass
 def move_Right():
+    for x in range(100,701,5):
+        draw_Character(x,500)
     pass
 def move_Down():
     pass
