@@ -37,6 +37,13 @@ def move_Left():
         draw_Character(x,100)
     pass
 
+def move_RightSide():
+    pass
+def move_BottomSide():
+    pass
+def move_LeftSide():
+    pass
+
 def move_Rectangle():
     #print("Rect")
     move_Top()
@@ -47,11 +54,14 @@ def move_Rectangle():
 
 def move_Triangle():
     #print("Tri")
+    move_RightSide()
+    move_BottomSide()
+    move_LeftSide()
     pass
 
 while True:
-    move_Circle()
-    move_Rectangle()
+    #move_Circle()
+    #move_Rectangle()
     move_Triangle()
     pass
 
