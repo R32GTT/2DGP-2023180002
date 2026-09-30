@@ -89,19 +89,25 @@ def _read_sheet_metadata(data):
     return meta, image_name, sheet_width, sheet_height
 
 
-def _parse_frames(data):
+def _parse_frames(data, sheet_width, sheet_height):
     frame_records = _require_object(data.get("frames"), "frames")
     if not frame_records:
         raise AnimationFormatError("frames must contain at least one frame")
 
     frames = []
     for frame_name, record in frame_records.items():
+        if not isinstance(frame_name, str) or not frame_name:
+            raise AnimationFormatError("frame names must be non-empty strings")
         record = _require_object(record, f"frame '{frame_name}'")
         rect = _require_object(record.get("frame"), f"frame '{frame_name}'.frame")
         x = _read_non_negative_int(rect.get("x"), f"frame '{frame_name}'.x")
         y = _read_non_negative_int(rect.get("y"), f"frame '{frame_name}'.y")
         width = _read_positive_int(rect.get("w"), f"frame '{frame_name}'.w")
         height = _read_positive_int(rect.get("h"), f"frame '{frame_name}'.h")
+        if x + width > sheet_width or y + height > sheet_height:
+            raise AnimationFormatError(
+                f"frame '{frame_name}' extends beyond the sprite sheet"
+            )
         frames.append(Frame(frame_name, x, y, width, height))
     return tuple(frames)
 
