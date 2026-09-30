@@ -232,7 +232,13 @@ def animation_load_json(json_path=None):
     sheet_path = os.path.join(os.path.dirname(manifest_path), image_name)
     if not os.path.isfile(sheet_path):
         raise AnimationFormatError(f"sprite sheet not found: '{sheet_path}'")
-    return load_image(sheet_path), animations
+    try:
+        sheet = load_image(sheet_path)
+    except Exception as error:
+        raise AnimationFormatError(
+            f"cannot load sprite sheet '{sheet_path}': {error}"
+        ) from error
+    return sheet, animations
 
 
 def _get_display_scale(animations):
@@ -293,13 +299,19 @@ def _run_viewer(sheet, animations):
         delay(LOOP_DELAY)
 
 
+def main():
+    canvas_open = False
+    try:
+        open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
+        canvas_open = True
+        sheet, animations = animation_load_json()
+        _run_viewer(sheet, animations)
+    except AnimationFormatError as error:
+        print(f"Animation viewer error: {error}")
+    finally:
+        if canvas_open:
+            close_canvas()
 
 
-open_canvas()
-
-animation_load_json()
-
-while(True):
-    pass
-
-close_canvas()
+if __name__ == "__main__":
+    main()
