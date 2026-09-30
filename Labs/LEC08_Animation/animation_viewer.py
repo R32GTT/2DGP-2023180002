@@ -20,6 +20,22 @@ INTER_ANIMATION_PAUSE = 1.0
 LOOP_DELAY = 0.01
 
 
+@dataclass(frozen=True)
+class Frame:
+    name: str
+    x: int
+    y: int
+    width: int
+    height: int
+    duration: float
+
+
+@dataclass(frozen=True)
+class Animation:
+    name: str
+    frames: tuple
+
+
 
 
 def animation_load_json():
