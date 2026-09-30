@@ -4,8 +4,20 @@ Each JSON frame provides its own source rectangle and duration. Animation
 groups come from ``meta.frameTags`` and play in tag order.
 """
 
-from pico2d import *
 import json
+import os
+import time
+from dataclasses import dataclass
+
+from pico2d import *
+
+
+CANVAS_WIDTH = 800
+CANVAS_HEIGHT = 600
+DEFAULT_JSON = "player.json"
+REPEATS_PER_ANIMATION = 5
+INTER_ANIMATION_PAUSE = 1.0
+LOOP_DELAY = 0.01
 
 
 
