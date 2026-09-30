@@ -174,7 +174,10 @@ def _parse_frames(data, sheet_width, sheet_height):
             raise AnimationFormatError(
                 f"frame '{frame_name}'.duration must be a positive number"
             )
-        frames.append(Frame(frame_name, x, y, width, height, duration_ms / 1000.0))
+        pico_y = sheet_height - y - height
+        frames.append(
+            Frame(frame_name, x, pico_y, width, height, duration_ms / 1000.0)
+        )
     return tuple(frames)
 
 
