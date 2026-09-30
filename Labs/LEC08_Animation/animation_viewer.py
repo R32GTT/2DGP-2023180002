@@ -20,6 +20,7 @@ REPEATS_PER_ANIMATION = 5
 INTER_ANIMATION_PAUSE = 1.0
 LOOP_DELAY = 0.01
 MAX_FRAME_DELTA = 0.25
+TIME_EPSILON = 1e-9
 
 
 @dataclass(frozen=True)
@@ -68,20 +69,20 @@ class PlaybackState:
         remaining = max(0.0, elapsed)
         while remaining > 0.0:
             if self.pause_remaining > 0.0:
-                if remaining < self.pause_remaining:
+                if remaining < self.pause_remaining - TIME_EPSILON:
                     self.pause_remaining -= remaining
                     return
-                remaining -= self.pause_remaining
+                remaining = max(0.0, remaining - self.pause_remaining)
                 self.advance_animation()
                 if remaining <= 0.0:
                     return
                 continue
 
             frame_time_left = self.current_frame.duration - self.frame_elapsed
-            if remaining < frame_time_left:
+            if remaining < frame_time_left - TIME_EPSILON:
                 self.frame_elapsed += remaining
                 return
-            remaining -= frame_time_left
+            remaining = max(0.0, remaining - frame_time_left)
             self.frame_elapsed = 0.0
             if self.frame_index + 1 < len(self.current_animation.frames):
                 self.frame_index += 1
