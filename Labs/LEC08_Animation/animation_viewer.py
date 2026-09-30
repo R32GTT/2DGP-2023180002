@@ -164,10 +164,19 @@ def _parse_animations(meta, frames):
     return tuple(animations)
 
 
-
-
 def animation_load_json(json_path=None):
-    return _load_manifest(json_path)
+    manifest_path, data = _load_manifest(json_path)
+    meta, image_name, sheet_width, sheet_height = _read_sheet_metadata(data)
+    frames = _parse_frames(data, sheet_width, sheet_height)
+    animations = _parse_animations(meta, frames)
+
+    sheet_path = os.path.join(os.path.dirname(manifest_path), image_name)
+    if not os.path.isfile(sheet_path):
+        raise AnimationFormatError(f"sprite sheet not found: '{sheet_path}'")
+    return load_image(sheet_path), animations
+
+
+
 
 open_canvas()
 
