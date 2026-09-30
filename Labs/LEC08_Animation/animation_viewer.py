@@ -64,25 +64,32 @@ class PlaybackState:
         self.pause_remaining = 0.0
 
     def update(self, elapsed):
-        elapsed = max(0.0, elapsed)
-        if self.pause_remaining > 0.0:
-            self.pause_remaining -= elapsed
-            if self.pause_remaining <= 0.0:
+        remaining = max(0.0, elapsed)
+        while remaining > 0.0:
+            if self.pause_remaining > 0.0:
+                if remaining < self.pause_remaining:
+                    self.pause_remaining -= remaining
+                    return
+                remaining -= self.pause_remaining
                 self.advance_animation()
-            return
+                if remaining <= 0.0:
+                    return
+                continue
 
-        self.frame_elapsed += elapsed
-        while self.frame_elapsed >= self.current_frame.duration:
-            self.frame_elapsed -= self.current_frame.duration
+            frame_time_left = self.current_frame.duration - self.frame_elapsed
+            if remaining < frame_time_left:
+                self.frame_elapsed += remaining
+                return
+            remaining -= frame_time_left
+            self.frame_elapsed = 0.0
             if self.frame_index + 1 < len(self.current_animation.frames):
                 self.frame_index += 1
             else:
                 self.cycles_completed += 1
                 if self.cycles_completed >= REPEATS_PER_ANIMATION:
-                    self.frame_elapsed = 0.0
                     self.pause_remaining = INTER_ANIMATION_PAUSE
-                    break
-                self.frame_index = 0
+                else:
+                    self.frame_index = 0
 
 
 class AnimationFormatError(ValueError):
