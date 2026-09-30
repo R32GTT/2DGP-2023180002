@@ -27,7 +27,7 @@ class Frame:
     y: int
     width: int
     height: int
-    duration: float
+    duration: float = 0.1
 
 
 @dataclass(frozen=True)
@@ -87,6 +87,23 @@ def _read_sheet_metadata(data):
     sheet_width = _read_positive_int(size.get("w"), "meta.size.w")
     sheet_height = _read_positive_int(size.get("h"), "meta.size.h")
     return meta, image_name, sheet_width, sheet_height
+
+
+def _parse_frames(data):
+    frame_records = _require_object(data.get("frames"), "frames")
+    if not frame_records:
+        raise AnimationFormatError("frames must contain at least one frame")
+
+    frames = []
+    for frame_name, record in frame_records.items():
+        record = _require_object(record, f"frame '{frame_name}'")
+        rect = _require_object(record.get("frame"), f"frame '{frame_name}'.frame")
+        x = _read_non_negative_int(rect.get("x"), f"frame '{frame_name}'.x")
+        y = _read_non_negative_int(rect.get("y"), f"frame '{frame_name}'.y")
+        width = _read_positive_int(rect.get("w"), f"frame '{frame_name}'.w")
+        height = _read_positive_int(rect.get("h"), f"frame '{frame_name}'.h")
+        frames.append(Frame(frame_name, x, y, width, height))
+    return tuple(frames)
 
 
 
