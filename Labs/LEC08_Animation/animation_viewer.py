@@ -78,10 +78,11 @@ class PlaybackState:
                 self.frame_index += 1
             else:
                 self.cycles_completed += 1
+                if self.cycles_completed >= REPEATS_PER_ANIMATION:
+                    self.frame_elapsed = 0.0
+                    self.pause_remaining = INTER_ANIMATION_PAUSE
+                    break
                 self.frame_index = 0
-                self.frame_elapsed = 0.0
-                self.pause_remaining = INTER_ANIMATION_PAUSE
-                break
 
 
 class AnimationFormatError(ValueError):
