@@ -5,6 +5,7 @@ groups come from ``meta.frameTags`` and play in tag order.
 """
 
 import json
+import math
 import os
 import time
 from dataclasses import dataclass
@@ -108,7 +109,17 @@ def _parse_frames(data, sheet_width, sheet_height):
             raise AnimationFormatError(
                 f"frame '{frame_name}' extends beyond the sprite sheet"
             )
-        frames.append(Frame(frame_name, x, y, width, height))
+        duration_ms = record.get("duration", 100)
+        if (
+            isinstance(duration_ms, bool)
+            or not isinstance(duration_ms, (int, float))
+            or not math.isfinite(duration_ms)
+            or duration_ms <= 0
+        ):
+            raise AnimationFormatError(
+                f"frame '{frame_name}'.duration must be a positive number"
+            )
+        frames.append(Frame(frame_name, x, y, width, height, duration_ms / 1000.0))
     return tuple(frames)
 
 
