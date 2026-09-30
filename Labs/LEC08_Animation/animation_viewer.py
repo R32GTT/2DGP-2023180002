@@ -56,6 +56,16 @@ class PlaybackState:
     def current_frame(self):
         return self.current_animation.frames[self.frame_index]
 
+    def update(self, elapsed):
+        self.frame_elapsed += max(0.0, elapsed)
+        while self.frame_elapsed >= self.current_frame.duration:
+            self.frame_elapsed -= self.current_frame.duration
+            if self.frame_index + 1 < len(self.current_animation.frames):
+                self.frame_index += 1
+            else:
+                self.frame_index = 0
+                self.cycles_completed += 1
+
 
 class AnimationFormatError(ValueError):
     """Raised when the animation JSON does not describe usable frames."""
