@@ -1,0 +1,258 @@
+{ "frames": {
+   "player #Idle gun 0.ase": {
+    "frame": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 100
+   },
+   "player #Idle gun 1.ase": {
+    "frame": { "x": 75, "y": 0, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 100
+   },
+   "player #Idle gun 2.ase": {
+    "frame": { "x": 150, "y": 0, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 100
+   },
+   "player #Idle gun 3.ase": {
+    "frame": { "x": 75, "y": 0, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 100
+   },
+   "player #Run with Gun 0.ase": {
+    "frame": { "x": 0, "y": 48, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 100
+   },
+   "player #Run with Gun 1.ase": {
+    "frame": { "x": 75, "y": 48, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 100
+   },
+   "player #Run with Gun 2.ase": {
+    "frame": { "x": 150, "y": 48, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 100
+   },
+   "player #Run with Gun 3.ase": {
+    "frame": { "x": 225, "y": 48, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 100
+   },
+   "player #Run with Gun 4.ase": {
+    "frame": { "x": 300, "y": 48, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 100
+   },
+   "player #Run with Gun 5.ase": {
+    "frame": { "x": 375, "y": 48, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 100
+   },
+   "player #Run with Gun 6.ase": {
+    "frame": { "x": 450, "y": 48, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 100
+   },
+   "player #Run with Gun 7.ase": {
+    "frame": { "x": 525, "y": 48, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 100
+   },
+   "player #Run with Gun 8.ase": {
+    "frame": { "x": 600, "y": 48, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 100
+   },
+   "player #Run with Gun 9.ase": {
+    "frame": { "x": 675, "y": 48, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 100
+   },
+   "player #Die 0.ase": {
+    "frame": { "x": 0, "y": 96, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 130
+   },
+   "player #Die 1.ase": {
+    "frame": { "x": 75, "y": 96, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 130
+   },
+   "player #Die 2.ase": {
+    "frame": { "x": 150, "y": 96, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 130
+   },
+   "player #JumpGun 0.ase": {
+    "frame": { "x": 0, "y": 144, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 150
+   },
+   "player #JumpGun 1.ase": {
+    "frame": { "x": 75, "y": 144, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 150
+   },
+   "player #JumpGun 2.ase": {
+    "frame": { "x": 150, "y": 144, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 150
+   },
+   "player #JumpGun 3.ase": {
+    "frame": { "x": 225, "y": 144, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 150
+   },
+   "player #JumpGun 4.ase": {
+    "frame": { "x": 300, "y": 144, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 150
+   },
+   "player #Shoot 0.ase": {
+    "frame": { "x": 0, "y": 192, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 70
+   },
+   "player #Shoot 1.ase": {
+    "frame": { "x": 75, "y": 192, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 70
+   },
+   "player #Crouch gun 0.ase": {
+    "frame": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 100
+   },
+   "player #Crouch gun 1.ase": {
+    "frame": { "x": 0, "y": 240, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 100
+   },
+   "player #Crouch gun 2.ase": {
+    "frame": { "x": 75, "y": 240, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 600
+   },
+   "player #Crouchshoot 0.ase": {
+    "frame": { "x": 0, "y": 288, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 70
+   },
+   "player #Crouchshoot 1.ase": {
+    "frame": { "x": 75, "y": 288, "w": 75, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 75, "h": 48 },
+    "sourceSize": { "w": 75, "h": 48 },
+    "duration": 70
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.18-beta1-dev",
+  "image": "player.png",
+  "format": "RGBA8888",
+  "size": { "w": 750, "h": 336 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "Idle gun", "from": 0, "to": 3, "direction": "forward", "color": "#000000ff" },
+   { "name": "Run with Gun", "from": 4, "to": 13, "direction": "forward", "color": "#000000ff" },
+   { "name": "Die", "from": 14, "to": 16, "direction": "forward", "color": "#000000ff" },
+   { "name": "JumpGun", "from": 17, "to": 21, "direction": "forward", "color": "#000000ff" },
+   { "name": "Shoot", "from": 22, "to": 23, "direction": "forward", "color": "#000000ff" },
+   { "name": "Crouch gun", "from": 24, "to": 26, "direction": "forward", "color": "#000000ff" },
+   { "name": "Crouchshoot", "from": 27, "to": 28, "direction": "forward", "color": "#000000ff" }
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
+   { "name": "smear", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
