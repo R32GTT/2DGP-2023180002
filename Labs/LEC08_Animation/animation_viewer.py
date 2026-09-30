@@ -145,7 +145,20 @@ def _parse_animations(meta, frames):
             raise AnimationFormatError(
                 f"animation '{name}' has an invalid frame range {start}..{end}"
             )
-        animations.append(Animation(name, frames[start : end + 1]))
+        animation_frames = frames[start : end + 1]
+        direction = tag.get("direction", "forward")
+        if direction == "reverse":
+            animation_frames = animation_frames[::-1]
+        elif direction == "pingpong":
+            animation_frames += animation_frames[-2:0:-1]
+        elif direction == "pingpong_reverse":
+            animation_frames = animation_frames[::-1]
+            animation_frames += animation_frames[-2:0:-1]
+        elif direction != "forward":
+            raise AnimationFormatError(
+                f"animation '{name}' has unsupported direction '{direction}'"
+            )
+        animations.append(Animation(name, animation_frames))
         names.add(name)
 
     return tuple(animations)
