@@ -56,6 +56,13 @@ class PlaybackState:
     def current_frame(self):
         return self.current_animation.frames[self.frame_index]
 
+    def advance_animation(self):
+        self.animation_index = (self.animation_index + 1) % len(self.animations)
+        self.frame_index = 0
+        self.frame_elapsed = 0.0
+        self.cycles_completed = 0
+        self.pause_remaining = 0.0
+
     def update(self, elapsed):
         self.frame_elapsed += max(0.0, elapsed)
         while self.frame_elapsed >= self.current_frame.duration:
