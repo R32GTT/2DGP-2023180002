@@ -176,6 +176,20 @@ def animation_load_json(json_path=None):
     return load_image(sheet_path), animations
 
 
+def _get_display_scale(animations):
+    max_width = max(frame.width for clip in animations for frame in clip.frames)
+    max_height = max(frame.height for clip in animations for frame in clip.frames)
+    target_scale = max(
+        (CANVAS_WIDTH * 0.5) / max_width,
+        (CANVAS_HEIGHT * 0.5) / max_height,
+    )
+    fit_scale = min(
+        (CANVAS_WIDTH * 0.9) / max_width,
+        (CANVAS_HEIGHT * 0.9) / max_height,
+    )
+    return min(target_scale, fit_scale)
+
+
 
 
 open_canvas()
