@@ -245,6 +245,23 @@ def _get_display_scale(animations):
     return min(target_scale, fit_scale)
 
 
+def _render_frame(sheet, frame, display_scale):
+    draw_width = max(1, int(round(frame.width * display_scale)))
+    draw_height = max(1, int(round(frame.height * display_scale)))
+    clear_canvas()
+    sheet.clip_draw(
+        frame.x,
+        frame.y,
+        frame.width,
+        frame.height,
+        CANVAS_WIDTH // 2,
+        CANVAS_HEIGHT // 2,
+        draw_width,
+        draw_height,
+    )
+    update_canvas()
+
+
 
 
 open_canvas()
