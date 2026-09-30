@@ -123,6 +123,34 @@ def _parse_frames(data, sheet_width, sheet_height):
     return tuple(frames)
 
 
+def _parse_animations(meta, frames):
+    tags = meta.get("frameTags")
+    if not isinstance(tags, list) or not tags:
+        raise AnimationFormatError("meta.frameTags must contain animation tags")
+
+    animations = []
+    names = set()
+    for tag_index, raw_tag in enumerate(tags):
+        tag = _require_object(raw_tag, f"meta.frameTags[{tag_index}]")
+        name = tag.get("name")
+        if not isinstance(name, str) or not name.strip():
+            raise AnimationFormatError(f"meta.frameTags[{tag_index}].name is required")
+        if name in names:
+            raise AnimationFormatError(f"animation tag '{name}' is duplicated")
+        start = _read_non_negative_int(
+            tag.get("from"), f"animation '{name}'.from"
+        )
+        end = _read_non_negative_int(tag.get("to"), f"animation '{name}'.to")
+        if start > end or end >= len(frames):
+            raise AnimationFormatError(
+                f"animation '{name}' has an invalid frame range {start}..{end}"
+            )
+        animations.append(Animation(name, frames[start : end + 1]))
+        names.add(name)
+
+    return tuple(animations)
+
+
 
 
 def animation_load_json(json_path=None):
