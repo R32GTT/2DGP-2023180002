@@ -36,6 +36,22 @@ class Animation:
     frames: tuple
 
 
+class AnimationFormatError(ValueError):
+    """Raised when the animation JSON does not describe usable frames."""
+
+
+def _resolve_manifest_path(json_path=None):
+    if json_path is None:
+        json_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), DEFAULT_JSON)
+    return os.path.abspath(os.fspath(json_path))
+
+
+def _require_object(value, description):
+    if not isinstance(value, dict):
+        raise AnimationFormatError(f"{description} must be a JSON object")
+    return value
+
+
 
 
 def animation_load_json():
