@@ -66,6 +66,29 @@ def _load_manifest(json_path=None):
     return path, _require_object(data, "animation JSON")
 
 
+def _read_non_negative_int(value, description):
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise AnimationFormatError(f"{description} must be a non-negative integer")
+    return value
+
+
+def _read_positive_int(value, description):
+    if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+        raise AnimationFormatError(f"{description} must be a positive integer")
+    return value
+
+
+def _read_sheet_metadata(data):
+    meta = _require_object(data.get("meta"), "meta")
+    size = _require_object(meta.get("size"), "meta.size")
+    image_name = meta.get("image")
+    if not isinstance(image_name, str) or not image_name.strip():
+        raise AnimationFormatError("meta.image must name a sprite sheet")
+    sheet_width = _read_positive_int(size.get("w"), "meta.size.w")
+    sheet_height = _read_positive_int(size.get("h"), "meta.size.h")
+    return meta, image_name, sheet_width, sheet_height
+
+
 
 
 def animation_load_json(json_path=None):
