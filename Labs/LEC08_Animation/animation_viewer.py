@@ -19,6 +19,7 @@ DEFAULT_JSON = "player.json"
 REPEATS_PER_ANIMATION = 5
 INTER_ANIMATION_PAUSE = 1.0
 LOOP_DELAY = 0.01
+MAX_FRAME_DELTA = 0.25
 
 
 @dataclass(frozen=True)
@@ -263,6 +264,33 @@ def _render_frame(sheet, frame, display_scale):
         draw_height,
     )
     update_canvas()
+
+
+def _process_events():
+    for event in get_events():
+        if event.type == SDL_QUIT:
+            return True
+        if event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+            return True
+    return False
+
+
+def _run_viewer(sheet, animations):
+    playback = PlaybackState(animations)
+    display_scale = _get_display_scale(animations)
+    previous_time = time.perf_counter()
+
+    while True:
+        if _process_events():
+            break
+
+        current_time = time.perf_counter()
+        elapsed = min(current_time - previous_time, MAX_FRAME_DELTA)
+        previous_time = current_time
+
+        playback.update(elapsed)
+        _render_frame(sheet, playback.current_frame, display_scale)
+        delay(LOOP_DELAY)
 
 
 
