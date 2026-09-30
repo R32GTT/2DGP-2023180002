@@ -52,10 +52,24 @@ def _require_object(value, description):
     return value
 
 
+def _load_manifest(json_path=None):
+    path = _resolve_manifest_path(json_path)
+    try:
+        with open(path, "r", encoding="utf-8") as manifest_file:
+            data = json.load(manifest_file)
+    except OSError as error:
+        raise AnimationFormatError(f"cannot read animation JSON '{path}': {error}") from error
+    except json.JSONDecodeError as error:
+        raise AnimationFormatError(
+            f"invalid JSON in '{path}' at line {error.lineno}, column {error.colno}"
+        ) from error
+    return path, _require_object(data, "animation JSON")
 
 
-def animation_load_json():
-    pass
+
+
+def animation_load_json(json_path=None):
+    return _load_manifest(json_path)
 
 open_canvas()
 
