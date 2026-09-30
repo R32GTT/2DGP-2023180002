@@ -37,6 +37,26 @@ class Animation:
     frames: tuple
 
 
+class PlaybackState:
+    def __init__(self, animations):
+        if not animations or any(not animation.frames for animation in animations):
+            raise AnimationFormatError("playback needs non-empty animations")
+        self.animations = animations
+        self.animation_index = 0
+        self.frame_index = 0
+        self.frame_elapsed = 0.0
+        self.cycles_completed = 0
+        self.pause_remaining = 0.0
+
+    @property
+    def current_animation(self):
+        return self.animations[self.animation_index]
+
+    @property
+    def current_frame(self):
+        return self.current_animation.frames[self.frame_index]
+
+
 class AnimationFormatError(ValueError):
     """Raised when the animation JSON does not describe usable frames."""
 
