@@ -24,6 +24,7 @@ CANVAS_HEIGHT = 800
 MAX_SPRITE_FRACTION = 0.8
 BACKGROUND_COLOR = (232, 236, 242)
 LOOP_DELAY = 0.01
+REPEATS_PER_ANIMATION = 5
 SPRITE_PATH = Path(__file__).resolve().with_name("sonic-sprite.png")
 DEFAULT_FRAME_DURATION = 0.1
 
@@ -57,6 +58,7 @@ class PlaybackState:
         self.frame_index = 0
         self.frame_elapsed = 0.0
         self.cycles_completed = 0
+        self.is_complete = False
 
     @property
     def current_frame(self):
@@ -64,13 +66,18 @@ class PlaybackState:
 
     def update(self, elapsed):
         self.frame_elapsed += max(0.0, elapsed)
-        while self.frame_elapsed >= self.current_frame.duration:
+        while not self.is_complete and self.frame_elapsed >= self.current_frame.duration:
             self.frame_elapsed -= self.current_frame.duration
             if self.frame_index + 1 < len(self.animation.frames):
                 self.frame_index += 1
             else:
                 self.cycles_completed += 1
-                self.frame_index = 0
+                if self.cycles_completed >= REPEATS_PER_ANIMATION:
+                    self.frame_index = len(self.animation.frames) - 1
+                    self.frame_elapsed = 0.0
+                    self.is_complete = True
+                else:
+                    self.frame_index = 0
 
 
 # First horizontal action row in sonic-sprite.png (top-left origin).
