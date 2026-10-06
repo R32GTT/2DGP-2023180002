@@ -47,6 +47,31 @@ class Animation:
     frames: tuple
 
 
+class PlaybackState:
+    """Track elapsed time within one animation's current frame."""
+
+    def __init__(self, animation):
+        if not animation.frames:
+            raise ValueError("playback needs at least one frame")
+        self.animation = animation
+        self.frame_index = 0
+        self.frame_elapsed = 0.0
+
+    @property
+    def current_frame(self):
+        return self.animation.frames[self.frame_index]
+
+    def update(self, elapsed):
+        self.frame_elapsed += max(0.0, elapsed)
+        while self.frame_elapsed >= self.current_frame.duration:
+            self.frame_elapsed -= self.current_frame.duration
+            if self.frame_index + 1 < len(self.animation.frames):
+                self.frame_index += 1
+            else:
+                self.frame_elapsed = 0.0
+                break
+
+
 # First horizontal action row in sonic-sprite.png (top-left origin).
 ANIMATIONS = (
     Animation(
@@ -155,14 +180,14 @@ def main():
         except (FileNotFoundError, RuntimeError) as error:
             print(f"Animation viewer error: {error}")
             return
-        render_frame(
-            sprite_sheet,
-            ANIMATIONS[0].frames[0],
-            get_display_scale(ANIMATIONS),
-        )
+        playback = PlaybackState(ANIMATIONS[0])
+        display_scale = get_display_scale(ANIMATIONS)
+        render_frame(sprite_sheet, playback.current_frame, display_scale)
         previous_time = time.perf_counter()
         while process_events():
-            previous_time, _elapsed = tick_clock(previous_time)
+            previous_time, elapsed = tick_clock(previous_time)
+            playback.update(elapsed)
+            render_frame(sprite_sheet, playback.current_frame, display_scale)
             delay(LOOP_DELAY)
     finally:
         close_canvas()
