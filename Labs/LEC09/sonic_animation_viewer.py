@@ -3,12 +3,20 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-from pico2d import clear_canvas, close_canvas, load_image, open_canvas, update_canvas
+from pico2d import (
+    clear_canvas,
+    close_canvas,
+    draw_rectangle,
+    load_image,
+    open_canvas,
+    update_canvas,
+)
 
 
 CANVAS_WIDTH = 1200
 CANVAS_HEIGHT = 800
 MAX_SPRITE_FRACTION = 0.8
+BACKGROUND_COLOR = (232, 236, 242)
 SPRITE_PATH = Path(__file__).resolve().with_name("sonic-sprite.png")
 DEFAULT_FRAME_DURATION = 0.1
 
@@ -97,6 +105,24 @@ def draw_frame(sheet, frame, center_x, center_y, scale=1.0):
     )
 
 
+def render_frame(sheet, frame, scale):
+    """Render a centered frame over a high-contrast solid background."""
+    clear_canvas()
+    draw_rectangle(
+        0,
+        0,
+        CANVAS_WIDTH,
+        CANVAS_HEIGHT,
+        BACKGROUND_COLOR[0],
+        BACKGROUND_COLOR[1],
+        BACKGROUND_COLOR[2],
+        255,
+        True,
+    )
+    draw_frame(sheet, frame, CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2, scale)
+    update_canvas()
+
+
 def main():
     """Application entry point."""
     open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
@@ -106,9 +132,11 @@ def main():
         except (FileNotFoundError, RuntimeError) as error:
             print(f"Animation viewer error: {error}")
             return
-        clear_canvas()
-        sprite_sheet.draw(CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2)
-        update_canvas()
+        render_frame(
+            sprite_sheet,
+            ANIMATIONS[0].frames[0],
+            get_display_scale(ANIMATIONS),
+        )
     finally:
         close_canvas()
 
