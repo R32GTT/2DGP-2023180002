@@ -6,9 +6,14 @@ from pathlib import Path
 from pico2d import (
     clear_canvas,
     close_canvas,
+    delay,
     draw_rectangle,
+    get_events,
     load_image,
     open_canvas,
+    SDL_KEYDOWN,
+    SDL_QUIT,
+    SDLK_ESCAPE,
     update_canvas,
 )
 
@@ -123,6 +128,16 @@ def render_frame(sheet, frame, scale):
     update_canvas()
 
 
+def process_events():
+    """Return False when the user requests application shutdown."""
+    for event in get_events():
+        if event.type == SDL_QUIT:
+            return False
+        if event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+            return False
+    return True
+
+
 def main():
     """Application entry point."""
     open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
@@ -137,6 +152,8 @@ def main():
             ANIMATIONS[0].frames[0],
             get_display_scale(ANIMATIONS),
         )
+        while process_events():
+            delay(0.01)
     finally:
         close_canvas()
 
