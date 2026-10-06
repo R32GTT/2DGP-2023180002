@@ -23,6 +23,17 @@ class Frame:
     duration: float = DEFAULT_FRAME_DURATION
 
 
+@dataclass(frozen=True)
+class Animation:
+    """A named, ordered sequence of animation frames."""
+
+    name: str
+    frames: tuple
+
+
+ANIMATIONS = ()
+
+
 def load_sprite_sheet(path=SPRITE_PATH):
     """Load the sprite sheet and report a useful failure reason."""
     if not path.is_file():
