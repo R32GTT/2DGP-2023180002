@@ -40,6 +40,8 @@ class Frame:
     width: int
     height: int
     duration: float = DEFAULT_FRAME_DURATION
+    anchor_x: float = 0.5
+    anchor_y: float = 1.0
 
 
 @dataclass(frozen=True)
@@ -258,6 +260,17 @@ def validate_animations(animations, sheet_width, sheet_height):
                     raise AnimationFormatError(
                         f"{description}.{field_name} must be an integer >= {minimum}"
                     )
+            for field_name in ("anchor_x", "anchor_y"):
+                value = getattr(frame, field_name)
+                if (
+                    isinstance(value, bool)
+                    or not isinstance(value, (int, float))
+                    or not math.isfinite(value)
+                    or not 0.0 <= value <= 1.0
+                ):
+                    raise AnimationFormatError(
+                        f"{description}.{field_name} must be between 0 and 1"
+                    )
             if (
                 isinstance(frame.duration, bool)
                 or not isinstance(frame.duration, (int, float))
@@ -289,6 +302,14 @@ def get_display_scale(animations):
     )
 
 
+def get_baseline_y(animations, display_scale):
+    """Keep the bottom anchor fixed while centering the maximum frame."""
+    max_height = max(
+        frame.height for animation in animations for frame in animation.frames
+    )
+    return (CANVAS_HEIGHT - max_height * display_scale) / 2
+
+
 def load_sprite_sheet(path=SPRITE_PATH):
     """Load the sprite sheet and report a useful failure reason."""
     if not path.is_file():
@@ -304,10 +325,12 @@ def pico2d_clip_y(frame, sheet_height):
     return sheet_height - frame.y - frame.height
 
 
-def draw_frame(sheet, frame, center_x, center_y, scale=1.0):
-    """Draw one cropped sprite frame at the requested canvas position."""
+def draw_frame(sheet, frame, anchor_x, anchor_y, scale=1.0):
+    """Draw a frame using its normalized bottom-center pivot."""
     draw_width = max(1, int(round(frame.width * scale)))
     draw_height = max(1, int(round(frame.height * scale)))
+    center_x = anchor_x + (0.5 - frame.anchor_x) * draw_width
+    center_y = anchor_y + (frame.anchor_y - 0.5) * draw_height
     sheet.clip_draw(
         frame.x,
         pico2d_clip_y(frame, sheet.h),
@@ -320,7 +343,7 @@ def draw_frame(sheet, frame, center_x, center_y, scale=1.0):
     )
 
 
-def render_frame(sheet, frame, scale):
+def render_frame(sheet, frame, scale, baseline_y):
     """Render a centered frame over a high-contrast solid background."""
     clear_canvas()
     draw_rectangle(
@@ -334,7 +357,7 @@ def render_frame(sheet, frame, scale):
         255,
         True,
     )
-    draw_frame(sheet, frame, CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2, scale)
+    draw_frame(sheet, frame, CANVAS_WIDTH // 2, baseline_y, scale)
     update_canvas()
 
 
@@ -370,12 +393,18 @@ def main():
             return
         playback = PlaybackState(ANIMATIONS)
         display_scale = get_display_scale(ANIMATIONS)
-        render_frame(sprite_sheet, playback.current_frame, display_scale)
+        baseline_y = get_baseline_y(ANIMATIONS, display_scale)
+        render_frame(sprite_sheet, playback.current_frame, display_scale, baseline_y)
         previous_time = time.perf_counter()
         while process_events():
             previous_time, elapsed = tick_clock(previous_time)
             playback.update(elapsed)
-            render_frame(sprite_sheet, playback.current_frame, display_scale)
+            render_frame(
+                sprite_sheet,
+                playback.current_frame,
+                display_scale,
+                baseline_y,
+            )
             delay(LOOP_DELAY)
     finally:
         close_canvas()
