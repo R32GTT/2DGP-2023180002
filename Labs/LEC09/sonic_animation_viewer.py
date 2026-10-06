@@ -67,6 +67,22 @@ def pico2d_clip_y(frame, sheet_height):
     return sheet_height - frame.y - frame.height
 
 
+def draw_frame(sheet, frame, center_x, center_y, scale=1.0):
+    """Draw one cropped sprite frame at the requested canvas position."""
+    draw_width = max(1, int(round(frame.width * scale)))
+    draw_height = max(1, int(round(frame.height * scale)))
+    sheet.clip_draw(
+        frame.x,
+        pico2d_clip_y(frame, sheet.h),
+        frame.width,
+        frame.height,
+        center_x,
+        center_y,
+        draw_width,
+        draw_height,
+    )
+
+
 def main():
     """Application entry point."""
     open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
