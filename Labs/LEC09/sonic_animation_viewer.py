@@ -78,11 +78,10 @@ class PlaybackState:
         elapsed = max(0.0, elapsed)
         if self.is_complete:
             self.pause_remaining = max(0.0, self.pause_remaining - elapsed)
-            if (
-                self.pause_remaining == 0.0
-                and self.animation_index + 1 < len(self.animations)
-            ):
-                self.animation_index += 1
+            if self.pause_remaining == 0.0:
+                self.animation_index = (
+                    self.animation_index + 1
+                ) % len(self.animations)
                 self._start_current_animation()
             return
         self.frame_elapsed += elapsed
