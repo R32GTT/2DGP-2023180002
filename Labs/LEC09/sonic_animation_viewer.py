@@ -110,7 +110,7 @@ class PlaybackState:
                     self.frame_index = 0
 
 
-# First horizontal action row in sonic-sprite.png (top-left origin).
+# Animation rows are numbered top-down below the title, not by clip.
 ANIMATIONS = (
     Animation(
         "달리기",
@@ -122,6 +122,11 @@ ANIMATIONS = (
             Frame(118, 40, 30, 38),
             Frame(150, 40, 30, 38),
             Frame(182, 40, 29, 38),
+        ),
+    ),
+    Animation(
+        "동작 01 후반",
+        (
             Frame(211, 39, 29, 38),
             Frame(240, 39, 29, 38),
             Frame(270, 45, 24, 32),
