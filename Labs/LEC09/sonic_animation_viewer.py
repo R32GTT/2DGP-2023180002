@@ -1,5 +1,6 @@
 """View Sonic sprite animations with Pico2D."""
 
+from dataclasses import dataclass
 from pathlib import Path
 
 from pico2d import clear_canvas, close_canvas, load_image, open_canvas, update_canvas
@@ -8,6 +9,18 @@ from pico2d import clear_canvas, close_canvas, load_image, open_canvas, update_c
 CANVAS_WIDTH = 1200
 CANVAS_HEIGHT = 800
 SPRITE_PATH = Path(__file__).resolve().with_name("sonic-sprite.png")
+DEFAULT_FRAME_DURATION = 0.1
+
+
+@dataclass(frozen=True)
+class Frame:
+    """A top-left-origin crop and its playback duration."""
+
+    x: int
+    y: int
+    width: int
+    height: int
+    duration: float = DEFAULT_FRAME_DURATION
 
 
 def load_sprite_sheet(path=SPRITE_PATH):
