@@ -8,6 +8,7 @@ from pico2d import clear_canvas, close_canvas, load_image, open_canvas, update_c
 
 CANVAS_WIDTH = 1200
 CANVAS_HEIGHT = 800
+MAX_SPRITE_FRACTION = 0.8
 SPRITE_PATH = Path(__file__).resolve().with_name("sonic-sprite.png")
 DEFAULT_FRAME_DURATION = 0.1
 
@@ -50,6 +51,19 @@ ANIMATIONS = (
         ),
     ),
 )
+
+
+def get_display_scale(animations):
+    """Scale the largest configured frame to fit most of the canvas."""
+    frames = [frame for animation in animations for frame in animation.frames]
+    if not frames:
+        raise ValueError("at least one animation frame is required")
+    max_width = max(frame.width for frame in frames)
+    max_height = max(frame.height for frame in frames)
+    return min(
+        CANVAS_WIDTH * MAX_SPRITE_FRACTION / max_width,
+        CANVAS_HEIGHT * MAX_SPRITE_FRACTION / max_height,
+    )
 
 
 def load_sprite_sheet(path=SPRITE_PATH):
