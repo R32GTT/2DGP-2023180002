@@ -1,5 +1,6 @@
 """View Sonic sprite animations with Pico2D."""
 
+import time
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -22,6 +23,7 @@ CANVAS_WIDTH = 1200
 CANVAS_HEIGHT = 800
 MAX_SPRITE_FRACTION = 0.8
 BACKGROUND_COLOR = (232, 236, 242)
+LOOP_DELAY = 0.01
 SPRITE_PATH = Path(__file__).resolve().with_name("sonic-sprite.png")
 DEFAULT_FRAME_DURATION = 0.1
 
@@ -138,6 +140,12 @@ def process_events():
     return True
 
 
+def tick_clock(previous_time):
+    """Return the current monotonic time and non-negative elapsed seconds."""
+    current_time = time.perf_counter()
+    return current_time, max(0.0, current_time - previous_time)
+
+
 def main():
     """Application entry point."""
     open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
@@ -152,8 +160,10 @@ def main():
             ANIMATIONS[0].frames[0],
             get_display_scale(ANIMATIONS),
         )
+        previous_time = time.perf_counter()
         while process_events():
-            delay(0.01)
+            previous_time, _elapsed = tick_clock(previous_time)
+            delay(LOOP_DELAY)
     finally:
         close_canvas()
 
