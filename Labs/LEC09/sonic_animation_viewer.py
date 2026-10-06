@@ -50,12 +50,20 @@ class Animation:
 
 
 class PlaybackState:
-    """Track elapsed time within one animation's current frame."""
+    """Track elapsed time, repeats, and transitions for an animation list."""
 
-    def __init__(self, animation):
-        if not animation.frames:
-            raise ValueError("playback needs at least one frame")
-        self.animation = animation
+    def __init__(self, animations):
+        if not animations or any(not animation.frames for animation in animations):
+            raise ValueError("playback needs non-empty animations")
+        self.animations = tuple(animations)
+        self.animation_index = 0
+        self._start_current_animation()
+
+    @property
+    def animation(self):
+        return self.animations[self.animation_index]
+
+    def _start_current_animation(self):
         self.frame_index = 0
         self.frame_elapsed = 0.0
         self.cycles_completed = 0
@@ -70,6 +78,12 @@ class PlaybackState:
         elapsed = max(0.0, elapsed)
         if self.is_complete:
             self.pause_remaining = max(0.0, self.pause_remaining - elapsed)
+            if (
+                self.pause_remaining == 0.0
+                and self.animation_index + 1 < len(self.animations)
+            ):
+                self.animation_index += 1
+                self._start_current_animation()
             return
         self.frame_elapsed += elapsed
         while not self.is_complete and self.frame_elapsed >= self.current_frame.duration:
@@ -195,7 +209,7 @@ def main():
         except (FileNotFoundError, RuntimeError) as error:
             print(f"Animation viewer error: {error}")
             return
-        playback = PlaybackState(ANIMATIONS[0])
+        playback = PlaybackState(ANIMATIONS)
         display_scale = get_display_scale(ANIMATIONS)
         render_frame(sprite_sheet, playback.current_frame, display_scale)
         previous_time = time.perf_counter()
