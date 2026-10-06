@@ -27,8 +27,15 @@ BACKGROUND_COLOR = (232, 236, 242)
 LOOP_DELAY = 0.01
 REPEATS_PER_ANIMATION = 5
 INTER_ANIMATION_PAUSE = 1.0
-SPRITE_PATH = Path(__file__).resolve().with_name("sonic-sprite.png")
 DEFAULT_FRAME_DURATION = 0.1
+
+
+def resolve_sprite_path(script_file):
+    """Resolve the adjacent sprite asset independent of the working directory."""
+    return Path(script_file).resolve().with_name("sonic-sprite.png")
+
+
+SPRITE_PATH = resolve_sprite_path(__file__)
 
 
 @dataclass(frozen=True)
