@@ -1,5 +1,6 @@
 """View Sonic sprite animations with Pico2D."""
 
+import math
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -197,7 +198,6 @@ ANIMATIONS = (
         "동작 08",
         (
             Frame(1, 326, 24, 45),
-            Frame(31, 327, 29, 44),
             Frame(65, 327, 20, 44),
             Frame(90, 327, 25, 43),
             Frame(119, 327, 25, 43),
@@ -220,6 +220,60 @@ ANIMATIONS = (
         ),
     ),
 )
+
+
+class AnimationFormatError(ValueError):
+    """Raised when the in-file animation data cannot be played safely."""
+
+
+def validate_animations(animations, sheet_width, sheet_height):
+    """Validate clip definitions and crop bounds before playback starts."""
+    if not animations:
+        raise AnimationFormatError("animations must contain at least one clip")
+
+    names = set()
+    for animation_index, animation in enumerate(animations):
+        if not isinstance(animation.name, str) or not animation.name.strip():
+            raise AnimationFormatError(
+                f"animation {animation_index} needs a non-empty name"
+            )
+        if animation.name in names:
+            raise AnimationFormatError(f"duplicate animation name: {animation.name}")
+        if not animation.frames:
+            raise AnimationFormatError(
+                f"animation '{animation.name}' has no frames"
+            )
+        names.add(animation.name)
+
+        for frame_index, frame in enumerate(animation.frames):
+            description = f"animation '{animation.name}' frame {frame_index}"
+            for field_name in ("x", "y", "width", "height"):
+                value = getattr(frame, field_name)
+                minimum = 1 if field_name in ("width", "height") else 0
+                if (
+                    isinstance(value, bool)
+                    or not isinstance(value, int)
+                    or value < minimum
+                ):
+                    raise AnimationFormatError(
+                        f"{description}.{field_name} must be an integer >= {minimum}"
+                    )
+            if (
+                isinstance(frame.duration, bool)
+                or not isinstance(frame.duration, (int, float))
+                or not math.isfinite(frame.duration)
+                or frame.duration <= 0
+            ):
+                raise AnimationFormatError(
+                    f"{description}.duration must be a positive number"
+                )
+            if (
+                frame.x + frame.width > sheet_width
+                or frame.y + frame.height > sheet_height
+            ):
+                raise AnimationFormatError(
+                    f"{description} extends beyond the {sheet_width}x{sheet_height} sheet"
+                )
 
 
 def get_display_scale(animations):
@@ -307,6 +361,11 @@ def main():
         try:
             sprite_sheet = load_sprite_sheet()
         except (FileNotFoundError, RuntimeError) as error:
+            print(f"Animation viewer error: {error}")
+            return
+        try:
+            validate_animations(ANIMATIONS, sprite_sheet.w, sprite_sheet.h)
+        except AnimationFormatError as error:
             print(f"Animation viewer error: {error}")
             return
         playback = PlaybackState(ANIMATIONS)
