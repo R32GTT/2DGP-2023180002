@@ -25,6 +25,7 @@ MAX_SPRITE_FRACTION = 0.8
 BACKGROUND_COLOR = (232, 236, 242)
 LOOP_DELAY = 0.01
 REPEATS_PER_ANIMATION = 5
+INTER_ANIMATION_PAUSE = 1.0
 SPRITE_PATH = Path(__file__).resolve().with_name("sonic-sprite.png")
 DEFAULT_FRAME_DURATION = 0.1
 
@@ -59,13 +60,18 @@ class PlaybackState:
         self.frame_elapsed = 0.0
         self.cycles_completed = 0
         self.is_complete = False
+        self.pause_remaining = 0.0
 
     @property
     def current_frame(self):
         return self.animation.frames[self.frame_index]
 
     def update(self, elapsed):
-        self.frame_elapsed += max(0.0, elapsed)
+        elapsed = max(0.0, elapsed)
+        if self.is_complete:
+            self.pause_remaining = max(0.0, self.pause_remaining - elapsed)
+            return
+        self.frame_elapsed += elapsed
         while not self.is_complete and self.frame_elapsed >= self.current_frame.duration:
             self.frame_elapsed -= self.current_frame.duration
             if self.frame_index + 1 < len(self.animation.frames):
@@ -76,6 +82,7 @@ class PlaybackState:
                     self.frame_index = len(self.animation.frames) - 1
                     self.frame_elapsed = 0.0
                     self.is_complete = True
+                    self.pause_remaining = INTER_ANIMATION_PAUSE
                 else:
                     self.frame_index = 0
 
