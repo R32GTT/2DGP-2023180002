@@ -62,6 +62,11 @@ def load_sprite_sheet(path=SPRITE_PATH):
         raise RuntimeError(f"cannot load sprite sheet '{path}': {error}") from error
 
 
+def pico2d_clip_y(frame, sheet_height):
+    """Convert a top-left image y-coordinate to Pico2D's bottom-left origin."""
+    return sheet_height - frame.y - frame.height
+
+
 def main():
     """Application entry point."""
     open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
