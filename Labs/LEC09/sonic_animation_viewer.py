@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from pico2d import close_canvas, open_canvas
+from pico2d import clear_canvas, close_canvas, load_image, open_canvas, update_canvas
 
 
 CANVAS_WIDTH = 1200
@@ -14,7 +14,10 @@ def main():
     """Application entry point."""
     open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
     try:
-        pass
+        sprite_sheet = load_image(str(SPRITE_PATH))
+        clear_canvas()
+        sprite_sheet.draw(CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2)
+        update_canvas()
     finally:
         close_canvas()
 
