@@ -386,8 +386,10 @@ def tick_clock(previous_time):
 
 def main():
     """Application entry point."""
-    open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
+    canvas_open = False
     try:
+        open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
+        canvas_open = True
         try:
             sprite_sheet = load_sprite_sheet()
         except (FileNotFoundError, RuntimeError) as error:
@@ -414,7 +416,8 @@ def main():
             )
             delay(LOOP_DELAY)
     finally:
-        close_canvas()
+        if canvas_open:
+            close_canvas()
 
 
 if __name__ == "__main__":
