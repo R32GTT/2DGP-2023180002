@@ -56,6 +56,7 @@ class PlaybackState:
         self.animation = animation
         self.frame_index = 0
         self.frame_elapsed = 0.0
+        self.cycles_completed = 0
 
     @property
     def current_frame(self):
@@ -68,8 +69,8 @@ class PlaybackState:
             if self.frame_index + 1 < len(self.animation.frames):
                 self.frame_index += 1
             else:
-                self.frame_elapsed = 0.0
-                break
+                self.cycles_completed += 1
+                self.frame_index = 0
 
 
 # First horizontal action row in sonic-sprite.png (top-left origin).
